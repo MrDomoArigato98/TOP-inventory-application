@@ -4,5 +4,5 @@ import { body, validationResult } from "express-validator";
 
 // Home page controller
 export async function getHome(req, res) {
-  console.log("getHome");
+  res.send("Homepage")
 }
