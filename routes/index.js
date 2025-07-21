@@ -1,11 +1,9 @@
-const homeRoutes = require("./game");
-const platformRoutes = require("./platform");
-const gameRoutes = require("./game");
+import homeRoutes from './home.js';
+import platformRoutes from './platform.js';
+import gameRoutes from './game.js';
 
-function mountRoutes(app) {
+export function mountRoutes(app) {
   app.use("/", homeRoutes);
   app.use("/platforms", platformRoutes);
   app.use("/games", gameRoutes);
 }
-
-module.exports = mountRoutes;

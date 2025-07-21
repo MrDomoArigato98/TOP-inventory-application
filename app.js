@@ -1,7 +1,10 @@
-const express = require("express");
+import express from "express"
 const app = express();
-
-const mountRoutes = require("./routes");
+import { mountRoutes } from './routes/index.js';
+import path from 'path'
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -26,4 +29,4 @@ app.use((err, req, res, next) => {
   res.json({ error: err.message || "Server Error" });
 });
 
-module.exports = app;
+export default app;
