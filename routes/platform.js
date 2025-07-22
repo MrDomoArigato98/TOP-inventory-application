@@ -16,9 +16,6 @@ router.get("/:id", platformController.getPlatformById);
 router.get("/:id/edit", platformController.editPlatformGetForm);
 router.post("/:id/edit", platformController.editPlatformPost);
 
-router.get("/:id/update", platformController.updatePlatformGetForm);
-router.post("/:id/update", platformController.updatePlatformPost);
-
 router.post("/:id/delete", platformController.deletePlatformPost);
 
 export default router;

@@ -1,8 +1,9 @@
 // const db = require("../db/quereies");
 
 export async function getAllPlatforms(req, res) {
-  console.log("getPlatform");
-  res.send("getPlatform");
+  res.render("index", {
+    title: "Inventory Application",
+  });
 }
 
 export async function getPlatformById(req, res) {
@@ -23,13 +24,6 @@ export async function editPlatformGetForm(req, res) {
 
 export async function editPlatformPost(req, res) {
   console.log("editPlatformPost");
-}
-
-export async function updatePlatformGetForm(req, res) {
-  console.log("updatePlatformGetForm");
-}
-export async function updatePlatformPost(req, res) {
-  console.log("updatePlatformPost");
 }
 
 export async function deletePlatformPost(req, res) {

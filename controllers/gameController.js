@@ -33,13 +33,6 @@ export async function editGamePost(req, res) {
   console.log("editGamePost");
 }
 
-export async function updateGameGetForm(req, res) {
-  console.log("updateGameGetForm");
-}
-
-export async function updateGamePost(req, res) {
-  console.log("updateGamePost");
-}
 
 export async function deleteGamePost(req,res) {
     console.log("deleteGamePost");

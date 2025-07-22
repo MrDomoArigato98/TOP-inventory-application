@@ -1,0 +1,23 @@
+<%- include("./partials/header") %>
+
+    <h2>All Platforms</h2>
+
+    <div class="platform-list">
+        <% platforms.forEach(platform=> { %>
+            <div class="card">
+                <h2>
+                    <%= platform.name %>
+                </h2>
+
+                <p>Manufacturer: <%= platform.manufacturer %>
+                </p>
+                <p>Release Year: <%= platform.release_year %>
+                </p>
+            </div>
+            <% }) %>
+
+
+
+
+
+                <%- include("./partials/footer") %>
