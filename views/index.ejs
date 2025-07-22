@@ -4,7 +4,7 @@
 
     <div class="platform-list">
         <% platforms.forEach(platform=> { %>
-            <div class="card">
+            <div class="platform-card">
                 <h2>
                     <%= platform.name %>
                 </h2>
@@ -13,6 +13,7 @@
                 </p>
                 <p>Release Year: <%= platform.release_year %>
                 </p>
+                <a href="/platforms/<%= platform.id %>">View Games</a>
             </div>
             <% }) %>
 
