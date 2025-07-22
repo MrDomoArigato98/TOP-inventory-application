@@ -8,14 +8,17 @@ export async function getAllPlatforms(req, res) {
 
 export async function getPlatformById(req, res) {
   const { id } = req.params;
-  const rows = await platformQueries.getPlatformById(id);
+  const gameRows = await platformQueries.getGamesByPlatformId(id);
+  const platformRows= await platformQueries.getPlatformNameById(id)
 
+  const manufacturer = platformRows[0]
+  
   try {
-    const platform = rows[0];
 
     res.render("platform", {
-      title: platform.name,
-      platform: platform,
+      title: manufacturer,
+      platform: manufacturer,
+      games: gameRows,
     });
   } catch (error) {
     console.error(error);

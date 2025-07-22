@@ -1,16 +1,25 @@
 <%- include ("./partials/header") %>
 
-    <div class="platform platform-card">
+    <h2>
+        <%= platform.name %> Games
+    </h2>
+    <div class="list">
 
-        <h2>
-            <%= platform.name %>
-        </h2>
+        <% games.forEach(game=> { %>
+            <div class="card">
+                <p><%= game.title %>
+                </p>
+                <p>Genre: <%= game.genre %>
+                </p>
+                <p>Release Year: <%= game.release_year %>
+                </p>
+                <p>Publisher: <%= game.publisher %>
+                </p>
+                <a href="<%= game.id %>/edit">Edit</a>
+            </div>
+            <% }) %>
 
-        <p>Manufacturer: <%= platform.manufacturer %>
-        </p>
-        <p>Release Year: <%= platform.release_year %>
-        </p>
 
-        <a href="<%= platform.id %>/edit">Edit</a>
+
     </div>
     <%- include ("./partials/footer") %>

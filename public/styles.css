@@ -146,13 +146,13 @@ body {
   text-transform: uppercase;
 }
 
-.platform-list {
+.list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
 }
 
-.platform-card {
+.card {
   background: var(--card-bg);
   border: 3px solid var(--primary);
   padding: 1rem;
@@ -161,15 +161,11 @@ body {
   color: var(--fg);
   text-shadow: 1px 1px 0 #000;
 }
-.platform-card > a {
+.card > a {
   color: rgb(2, 255, 2);
 }
 
-.platform {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 
 h2 {
   font-size: 1rem;

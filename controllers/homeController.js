@@ -6,7 +6,6 @@ import * as platformDb from "../db/platformQueries.js";
 // Home page controller
 export async function getHome(req, res) {
   const platforms = await platformDb.getAllPlatforms();
-console.log({ platforms }, 'homeController.js line 9')
   res.render("index", {
     title: "Inventory App",
     platforms: platforms,
