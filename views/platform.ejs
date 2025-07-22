@@ -1,0 +1,16 @@
+<%- include ("./partials/header") %>
+
+    <div class="platform">
+
+        <h2>
+            <%= platform.name %>
+        </h2>
+
+        <p>Manufacturer: <%= platform.manufacturer %>
+        </p>
+        <p>Release Year: <%= platform.release_year %>
+        </p>
+
+        <a href="<%= platform.id %>/edit">Edit</a>
+    </div>
+    <%- include ("./partials/footer") %>

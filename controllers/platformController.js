@@ -1,4 +1,4 @@
-// const db = require("../db/quereies");
+import * as platformQueries from "../db/platformQueries.js";
 
 export async function getAllPlatforms(req, res) {
   res.render("index", {
@@ -8,7 +8,18 @@ export async function getAllPlatforms(req, res) {
 
 export async function getPlatformById(req, res) {
   const { id } = req.params;
-  console.log("Platform Id: ", id);
+  const rows = await platformQueries.getPlatformById(id);
+
+  try {
+    const platform = rows[0];
+
+    res.render("platform", {
+      title: platform.name,
+      platform: platform,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export async function addNewPlatformGetForm(req, res) {

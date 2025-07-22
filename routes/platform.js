@@ -7,15 +7,12 @@ import * as platformController from "../controllers/platformController.js";
 root is /platforms
 */
 
-router.get("/", platformController.getAllPlatforms);
 router.get("/new", platformController.addNewPlatformGetForm);
 router.post("/new", platformController.addNewPlatformPost);
-
-router.get("/:id", platformController.getPlatformById);
-
 router.get("/:id/edit", platformController.editPlatformGetForm);
 router.post("/:id/edit", platformController.editPlatformPost);
-
 router.post("/:id/delete", platformController.deletePlatformPost);
+
+router.get("/:id", platformController.getPlatformById);
 
 export default router;
