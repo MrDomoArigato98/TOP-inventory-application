@@ -9,6 +9,7 @@ root is /platforms
 
 router.get("/new", platformController.addNewPlatformGetForm);
 router.post("/new", platformController.addNewPlatformPost);
+
 router.get("/:id/edit", platformController.editPlatformGetForm);
 router.post("/:id/edit", platformController.editPlatformPost);
 router.post("/:id/delete", platformController.deletePlatformPost);

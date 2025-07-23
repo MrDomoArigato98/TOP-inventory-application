@@ -161,11 +161,14 @@ body {
   color: var(--fg);
   text-shadow: 1px 1px 0 #000;
 }
-.card > a {
+.card-link {
   color: rgb(2, 255, 2);
 }
-
-
+.card-link-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 h2 {
   font-size: 1rem;

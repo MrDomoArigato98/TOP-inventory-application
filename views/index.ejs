@@ -13,7 +13,10 @@
                 </p>
                 <p>Release Year: <%= platform.release_year %>
                 </p>
-                <a href="/platforms/<%= platform.id %>">View Games</a>
+                <div class="card-link-flex">
+                    <a class="card-link" href="/platforms/<%= platform.id %>">View Games</a>
+                    <a class="card-link" href="/platforms/<%= platform.id %>/edit">Edit Platform</a>
+                </div>
             </div>
             <% }) %>
 

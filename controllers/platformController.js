@@ -33,6 +33,18 @@ export async function addNewPlatformPost(req, res) {
 
 export async function editPlatformGetForm(req, res) {
   console.log("editPlatformGetForm");
+
+  const { id } = req.params;
+  const rows = await queries.getPlatform(id);
+  console.log(rows);
+  
+
+  const platform = rows[0];
+
+  res.render("platformForm", {
+    title: "Edit Platform",
+    platform: platform,
+  });
 }
 
 export async function editPlatformPost(req, res) {

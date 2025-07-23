@@ -5,6 +5,12 @@ export async function getAllPlatforms() {
   return rows;
 }
 
+export async function getPlatform(id) {
+  const { rows } = await pool.query("SELECT * FROM platforms where id = ($1)", [
+    id,
+  ]);
+  return rows;
+}
 export async function getGamesByPlatformId(id) {
   const { rows } = await pool.query(
     "SELECT * FROM games WHERE platform_id=($1)",
@@ -46,5 +52,5 @@ export async function editGame(id, form) {
     [form.gameTitle, form.gamePublisher, form.gameGenre, form.releaseYear, id]
   );
 
-  return res.rows[0]
+  return res.rows[0];
 }
