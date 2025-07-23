@@ -11,13 +11,21 @@ export async function getGameById(req, res) {
 }
 
 export async function addNewGameGetForm(req, res) {
-  console.log("addNewGameGetForm");
-
-  // res.render("form")
+  console.log("test");
+  res.render("addGameForm", {
+    title: "Add game",
+  });
 }
 
 export async function addNewGamePost(req, res) {
-  // Here we have to sanitize the input as well
+  const errors = validationResult(req);
+
+  const { gameTitle, publisher, genre, releaseYear } = req.body;
+  if (!errors.isEmpty()) {
+    return res.status(400).render("addGameForm", {
+      title: "Add Game",
+    });
+  }
 
   res.redirect("/");
 }
