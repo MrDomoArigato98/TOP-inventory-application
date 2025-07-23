@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import * as queries from "../db/queries.js";
 
 export async function getAllPlatforms(req, res) {
@@ -11,10 +12,9 @@ export async function getPlatformById(req, res) {
   const gameRows = await queries.getGamesByPlatformId(id);
   const platformRows = await queries.getPlatformNameById(id);
   const manufacturer = platformRows[0];
-    console.log(("Viewing platform games:"));
-    console.log(gameRows);
-    
-    
+  console.log("Viewing platform games:");
+  console.log(gameRows);
+
   try {
     res.render("platform", {
       title: "Game Inventory",
@@ -37,7 +37,7 @@ export async function editPlatformGetForm(req, res) {
   const { id } = req.params;
   const rows = await queries.getPlatform(id);
   console.log("Editing platform:");
-  
+
   console.log(rows);
 
   const platform = rows[0];
@@ -49,14 +49,26 @@ export async function editPlatformGetForm(req, res) {
 }
 
 export async function editPlatformPost(req, res) {
-  console.log("editPlatformPost");
-
+  const errors = validationResult(req);
   const { id } = req.params;
+    
+  if (!errors.isEmpty()) {
+    return res.status(400).render("platformForm", {
+      platform: {
+        id,
+        name: req.body.platform,
+        manufacturer: req.body.manufacturer,
+        release_year: req.body.releaseYear,
+      },
+      errors: errors.array(),
+    });
+  }
+
   const form = req.body;
 
   await queries.editPlatform(id, form);
 
-  res.redirect("/")
+  res.redirect("/");
 }
 
 export async function deletePlatformPost(req, res) {
