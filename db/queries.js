@@ -16,11 +16,25 @@ export async function getGamesByPlatformId(id) {
     "SELECT * FROM games WHERE platform_id=($1)",
     [id]
   );
-  console.log(rows);
 
   return rows;
 }
 
+export async function editPlatform(id, form) {
+  const res = await pool.query(
+    `
+    UPDATE platforms
+    SET name = $1,
+      manufacturer = $2,
+      release_year = $3
+    WHERE id = $4
+    RETURNING *;
+    `,
+    [form.platformName, form.manufacturer, form.releaseYear, id]
+  );
+
+  return res;
+}
 export async function getPlatformNameById(id) {
   const { rows } = await pool.query(
     "SELECT name FROM platforms WHERE id =($1)",
@@ -49,7 +63,7 @@ export async function editGame(id, form) {
       WHERE id = $5
       RETURNING *;
     `,
-    [form.gameTitle, form.gamePublisher, form.gameGenre, form.releaseYear, id]
+    [form.title, form.publisher, form.genre, form.releaseYear, id]
   );
 
   return res.rows[0];

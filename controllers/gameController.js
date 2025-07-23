@@ -1,6 +1,6 @@
 import * as queries from "../db/queries.js";
 //We have to figure out how to use express-validator for this
-import { body, validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 
 export async function getAllGames(req, res) {
   res.send("getGame");
@@ -8,7 +8,6 @@ export async function getAllGames(req, res) {
 
 export async function getGameById(req, res) {
   const { id } = req.params;
-
 }
 
 export async function addNewGameGetForm(req, res) {
@@ -39,12 +38,27 @@ export async function editGameGetForm(req, res) {
 
 export async function editGamePost(req, res) {
   console.log("editGamePost");
-
   const { id } = req.params;
-  const form = req.body;
+  const errors = validationResult(req);
 
-  await queries.editGame(id, form);
-  // TODO 
+  console.log(req.body);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).render("gameForm", {
+      game: {
+        id,
+        title: req.body.title,
+        publisher: req.body.publisher,
+        genre: req.body.genre,
+        release_year: req.body.releaseYear,
+      },
+      errors: errors.array(),
+    });
+  }
+
+  await queries.editGame(id, req.body);
+
+  // TODO
   // Redirect to just displaying the game on it's own.
   res.redirect(`/`);
 }

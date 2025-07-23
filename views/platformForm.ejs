@@ -1,19 +1,26 @@
 <%- include("./partials/header") %>
 
-    <form action="/platforms/<%= platform.id %>/edit" method="POST">
+    <% if (typeof errors !=='undefined' ) { %>
+        <ul class="errors">
+            <% errors.forEach(err=> { %>
+                <li>
+                    <%= err.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <form action="/platforms/<%= platform.id %>/edit" method="POST">
 
-        <label>Platform:</label>
-        <input value="<%= platform.name %>" type="text" name="platformName" id="platformName" required>
+            <label>Platform:</label>
+            <input value="<%= platform.name %>" type="text" name="platformName" id="platformName" required>
 
-        <label>Manufacturer: </label>
-        <input value="<%= platform.manufacturer %>" type="text" name="platformMnufacturer" id="platformMnufacturer"
-            required>
+            <label>Manufacturer: </label>
+            <input value="<%= platform.manufacturer %>" type="text" name="manufacturer" id="manufacturer" required>
 
-        <label>Release Year: </label>
-        <input value="<%= platform.release_year %>" type="text" name="releaseYear" id="releaseYear" required>
+            <label>Release Year: </label>
+            <input value="<%= platform.release_year %>" type="text" name="releaseYear" id="releaseYear" required>
 
-        <button type="submit">Submit</button>
-        <a class="card-link" href="/">Back to home</a>
-    </form>
+            <button type="submit">Submit</button>
+            <a class="card-link" href="/">Back to home</a>
+        </form>
 
-    <%- include("./partials/footer") %>
+        <%- include("./partials/footer") %>

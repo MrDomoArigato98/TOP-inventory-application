@@ -10,9 +10,11 @@ export async function getPlatformById(req, res) {
   const { id } = req.params;
   const gameRows = await queries.getGamesByPlatformId(id);
   const platformRows = await queries.getPlatformNameById(id);
-
   const manufacturer = platformRows[0];
-
+    console.log(("Viewing platform games:"));
+    console.log(gameRows);
+    
+    
   try {
     res.render("platform", {
       title: "Game Inventory",
@@ -32,12 +34,11 @@ export async function addNewPlatformPost(req, res) {
 }
 
 export async function editPlatformGetForm(req, res) {
-  console.log("editPlatformGetForm");
-
   const { id } = req.params;
   const rows = await queries.getPlatform(id);
-  console.log(rows);
+  console.log("Editing platform:");
   
+  console.log(rows);
 
   const platform = rows[0];
 
@@ -49,6 +50,13 @@ export async function editPlatformGetForm(req, res) {
 
 export async function editPlatformPost(req, res) {
   console.log("editPlatformPost");
+
+  const { id } = req.params;
+  const form = req.body;
+
+  await queries.editPlatform(id, form);
+
+  res.redirect("/")
 }
 
 export async function deletePlatformPost(req, res) {

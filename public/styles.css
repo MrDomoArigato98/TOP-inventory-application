@@ -180,7 +180,10 @@ h2 {
   margin-bottom: 1rem;
   text-align: center;
 }
-
+.errors{
+    margin-top: 2rem;
+    color: var(--highlight);
+}
 /* */
 
 button,
