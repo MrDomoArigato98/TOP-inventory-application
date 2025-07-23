@@ -151,7 +151,17 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
 }
-
+.card-add{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--card-bg);
+  border: 3px solid var(--primary);
+  padding: 1rem;
+  box-shadow: 4px 4px 0 var(--highlight);
+  color: var(--fg);
+  text-shadow: 1px 1px 0 #000;
+}
 .card {
   background: var(--card-bg);
   border: 3px solid var(--primary);
@@ -161,6 +171,7 @@ body {
   color: var(--fg);
   text-shadow: 1px 1px 0 #000;
 }
+
 .card-link {
   color: rgb(2, 255, 2);
   
