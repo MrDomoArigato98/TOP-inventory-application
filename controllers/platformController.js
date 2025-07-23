@@ -28,9 +28,29 @@ export async function getPlatformById(req, res) {
 
 export async function addNewPlatformGetForm(req, res) {
   console.log("addNewPlatformGetForm");
+  res.render("addPlatformForm", {
+    title: "Add Platform",
+  });
 }
 export async function addNewPlatformPost(req, res) {
   console.log("addNewPlatformPost");
+  const errors = validationResult(req);
+
+  const { platform, manufacturer, releaseYear } = req.body;
+  if (!errors.isEmpty()) {
+    return res.status(400).render("addPlatformForm", {
+      name: platform,
+      manufacturer,
+      release_year: releaseYear,
+      title: "Edit Platform",
+      errors: errors.array(),
+    });
+  }
+  const form = req.body;
+
+  const queryResult = await queries.addPlatform(form);
+
+  res.redirect("/");
 }
 
 export async function editPlatformGetForm(req, res) {
@@ -51,7 +71,7 @@ export async function editPlatformGetForm(req, res) {
 export async function editPlatformPost(req, res) {
   const errors = validationResult(req);
   const { id } = req.params;
-    
+
   if (!errors.isEmpty()) {
     return res.status(400).render("platformForm", {
       platform: {
@@ -60,6 +80,7 @@ export async function editPlatformPost(req, res) {
         manufacturer: req.body.manufacturer,
         release_year: req.body.releaseYear,
       },
+      title: "Edit Platform",
       errors: errors.array(),
     });
   }

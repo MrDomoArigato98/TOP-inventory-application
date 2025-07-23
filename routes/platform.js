@@ -8,7 +8,29 @@ root is /platforms
 */
 
 router.get("/new", platformController.addNewPlatformGetForm);
-router.post("/new", platformController.addNewPlatformPost);
+router.post(
+  "/new",
+  [
+    body("platform")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Platform name must be 1-100 characters"),
+
+    body("manufacturer")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Platform name must be 1-100 characters"),
+
+    body("releaseYear")
+      .trim()
+      .toInt()
+      .isInt({ min: 1970, max: new Date().getFullYear() + 1 })
+      .withMessage("Enter a valid release year"),
+  ],
+  platformController.addNewPlatformPost
+);
 
 router.get("/:id/edit", platformController.editPlatformGetForm);
 router.post(

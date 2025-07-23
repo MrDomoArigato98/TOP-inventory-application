@@ -20,6 +20,18 @@ export async function getGamesByPlatformId(id) {
   return rows;
 }
 
+export async function addPlatform(form) {
+  const { rows } = await pool.query(
+    `
+    INSERT INTO platforms (name,manufacturer,release_year)
+    VALUES ($1,$2,$3)
+    RETURNING *;
+    `,
+    [form.platform, form.manufacturer, form.releaseYear]
+  );
+
+  return rows;
+}
 export async function editPlatform(id, form) {
   const res = await pool.query(
     `

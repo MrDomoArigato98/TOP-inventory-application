@@ -31,7 +31,7 @@ export async function editGameGetForm(req, res) {
   const game = rows[0];
 
   res.render("gameForm", {
-    title: "Add game",
+    title: "Edit game",
     game: game,
   });
 }
@@ -52,6 +52,7 @@ export async function editGamePost(req, res) {
         genre: req.body.genre,
         release_year: req.body.releaseYear,
       },
+      title: "Edit game",
       errors: errors.array(),
     });
   }
