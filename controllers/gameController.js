@@ -1,6 +1,4 @@
-//And we need to make our queries too.
-// const db = require("../db/quereies");
-
+import * as queries from "../db/queries.js";
 //We have to figure out how to use express-validator for this
 import { body, validationResult } from "express-validator";
 
@@ -10,7 +8,7 @@ export async function getAllGames(req, res) {
 
 export async function getGameById(req, res) {
   const { id } = req.params;
-  console.log("Game Id: ", id);
+
 }
 
 export async function addNewGameGetForm(req, res) {
@@ -27,14 +25,30 @@ export async function addNewGamePost(req, res) {
 
 export async function editGameGetForm(req, res) {
   console.log("editGameGetForm");
+
+  const { id } = req.params;
+
+  const rows = await queries.getGameById(id);
+  const game = rows[0];
+
+  res.render("gameForm", {
+    title: "Add game",
+    game: game,
+  });
 }
 
 export async function editGamePost(req, res) {
   console.log("editGamePost");
+
+  const { id } = req.params;
+  const form = req.body;
+
+  await queries.editGame(id, form);
+  // TODO 
+  // Redirect to just displaying the game on it's own.
+  res.redirect(`/`);
 }
 
-
-export async function deleteGamePost(req,res) {
-    console.log("deleteGamePost");
-    
+export async function deleteGamePost(req, res) {
+  console.log("deleteGamePost");
 }

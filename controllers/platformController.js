@@ -1,22 +1,21 @@
-import * as platformQueries from "../db/platformQueries.js";
+import * as queries from "../db/queries.js";
 
 export async function getAllPlatforms(req, res) {
   res.render("index", {
-    title: "Inventory Application",
+    title: "Game Inventory",
   });
 }
 
 export async function getPlatformById(req, res) {
   const { id } = req.params;
-  const gameRows = await platformQueries.getGamesByPlatformId(id);
-  const platformRows= await platformQueries.getPlatformNameById(id)
+  const gameRows = await queries.getGamesByPlatformId(id);
+  const platformRows = await queries.getPlatformNameById(id);
 
-  const manufacturer = platformRows[0]
-  
+  const manufacturer = platformRows[0];
+
   try {
-
     res.render("platform", {
-      title: manufacturer,
+      title: "Game Inventory",
       platform: manufacturer,
       games: gameRows,
     });
