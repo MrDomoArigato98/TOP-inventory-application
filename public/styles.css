@@ -163,6 +163,10 @@ body {
 }
 .card-link {
   color: rgb(2, 255, 2);
+  
+}
+.card-link:hover{
+  color: var(--highlight);
 }
 .card-link-flex {
   display: flex;
