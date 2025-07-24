@@ -54,7 +54,7 @@ export async function editPlatform(id, form) {
     WHERE id = $4
     RETURNING *;
     `,
-    [form.platform, form.manufacturer, form.releaseYear, id]
+    [form.platformName, form.manufacturer, form.releaseYear, id]
   );
 
   return res;

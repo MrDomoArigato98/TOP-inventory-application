@@ -8,16 +8,16 @@ export async function getAllPlatforms(req, res) {
 }
 
 export async function getPlatformById(req, res) {
-  const { id } = req.params;
-  const gameRows = await queries.getGamesByPlatformId(id);
-  const platformRows = await queries.getPlatformNameById(id);
+  const { platformId } = req.params;
+  const gameRows = await queries.getGamesByPlatformId(platformId);
+  const platformRows = await queries.getPlatformNameById(platformId);
   const manufacturer = platformRows[0];
 
   try {
     res.render("platform", {
       title: "Game Inventory",
       platform: manufacturer,
-      platformId: id,
+      platformId: platformId,
       games: gameRows,
     });
   } catch (error) {
@@ -27,8 +27,10 @@ export async function getPlatformById(req, res) {
 
 export async function addNewPlatformGetForm(req, res) {
   console.log("addNewPlatformGetForm");
-  res.render("addPlatformForm", {
+  res.render("platformForm", {
     title: "Add Platform",
+    formAction: "/platforms/new/",
+    platform: {},
   });
 }
 export async function addNewPlatformPost(req, res) {
@@ -43,48 +45,55 @@ export async function addNewPlatformPost(req, res) {
       release_year: releaseYear,
       title: "Edit Platform",
       errors: errors.array(),
+      formAction: "/platforms/new/",
+      platform: {},
     });
   }
   const form = req.body;
 
   const queryResult = await queries.addPlatform(form);
-
   res.redirect("/");
 }
 
 export async function editPlatformGetForm(req, res) {
-  const { id } = req.params;
-  const rows = await queries.getPlatform(id);
+  const { platformId } = req.params;
+  const rows = await queries.getPlatform(platformId);
   console.log("Editing platform:");
-
   const platform = rows[0];
+  console.log(platform);
 
   res.render("platformForm", {
     title: "Edit Platform",
     platform: platform,
+    formAction: `/platforms/${platform.id}/edit`,
   });
 }
 
 export async function editPlatformPost(req, res) {
   const errors = validationResult(req);
-  const { id } = req.params;
+  const { platformId } = req.params;
+  console.log(req.body);
 
   if (!errors.isEmpty()) {
     return res.status(400).render("platformForm", {
       platform: {
-        id,
-        name: req.body.platform,
+        platformId,
+        platformName: req.body.platformName,
         manufacturer: req.body.manufacturer,
         release_year: req.body.releaseYear,
       },
       title: "Edit Platform",
+      formAction: `/platforms/${platformId}/edit`,
       errors: errors.array(),
     });
   }
 
   const form = req.body;
 
-  await queries.editPlatform(id, form);
+  console.log(form);
+  
+
+  await queries.editPlatform(platformId, form);
 
   res.redirect("/");
 }
@@ -159,7 +168,7 @@ export async function editGamePost(req, res) {
     return res.status(400).render("gameForm", {
       platformId,
       game: {
-        id: gameId,
+        platformId: gameId,
         title: req.body.gameTitle,
         publisher: req.body.publisher,
         genre: req.body.genre,

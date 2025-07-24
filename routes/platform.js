@@ -14,9 +14,9 @@ root is /platforms
 router.get("/new", platformController.addNewPlatformGetForm);
 router.post("/new", platformValidators, platformController.addNewPlatformPost);
 
-router.get("/:id/edit", platformController.editPlatformGetForm);
+router.get("/:platformId/edit", platformController.editPlatformGetForm);
 router.post(
-  "/:id/edit",
+  "/:platformId/edit",
   platformValidators,
   platformController.editPlatformPost
 );
@@ -29,14 +29,13 @@ router.post(
 );
 
 router.get("/:platformId/games/:gameId/edit", platformController.editGame);
-
 router.post(
   "/:platformId/games/:gameId/edit",
   gameValidators,
   platformController.editGamePost
 );
 
-router.get("/:id/games", platformController.getPlatformById);
+router.get("/:platformId/games", platformController.getPlatformById);
 
-router.post("/:id/delete", platformController.deletePlatformPost);
+router.post("/:platformId/delete", platformController.deletePlatformPost);
 export default router;

@@ -1,7 +1,7 @@
 import { body } from "express-validator";
 
 export const platformValidators = [
-  body("platform")
+  body("platformName")
     .trim()
     .escape()
     .isLength({ min: 1, max: 100 })
