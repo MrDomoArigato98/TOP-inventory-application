@@ -12,7 +12,7 @@ export async function getGameById(req, res) {
 
 export async function addNewGameGetForm(req, res) {
   console.log("test");
-  res.render("addGameForm", {
+  res.render("gameForm", {
     title: "Add game",
   });
 }
@@ -44,7 +44,7 @@ export async function editGamePost(req, res) {
     return res.status(400).render("gameForm", {
       game: {
         id,
-        title,
+        gameTitle,
         release_year,
         genre,
         publisher,

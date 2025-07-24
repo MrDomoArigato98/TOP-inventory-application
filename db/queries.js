@@ -26,7 +26,7 @@ export async function addGameToPlatform(form, platformId) {
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *;
     `,
-    [form.gameTitle, form.publisher, form.genre, platformId, form.releaseYear]
+    [form.title, form.publisher, form.genre, platformId, form.releaseYear]
   );
 
   return rows[0];
@@ -87,7 +87,7 @@ export async function editGame(id, form) {
       WHERE id = $5
       RETURNING *;
     `,
-    [form.title, form.publisher, form.genre, form.releaseYear, id]
+    [form.title, form.publisher, form.genre, form.release_year, id]
   );
 
   return res.rows[0];

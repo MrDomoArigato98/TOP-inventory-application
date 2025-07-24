@@ -12,8 +12,6 @@ export async function getPlatformById(req, res) {
   const gameRows = await queries.getGamesByPlatformId(id);
   const platformRows = await queries.getPlatformNameById(id);
   const manufacturer = platformRows[0];
-  console.log("Viewing platform games:");
-  console.log(gameRows);
 
   try {
     res.render("platform", {
@@ -59,8 +57,6 @@ export async function editPlatformGetForm(req, res) {
   const rows = await queries.getPlatform(id);
   console.log("Editing platform:");
 
-  console.log(rows);
-
   const platform = rows[0];
 
   res.render("platformForm", {
@@ -94,35 +90,43 @@ export async function editPlatformPost(req, res) {
 }
 export async function addNewGameToPlatform(req, res) {
   const { platformId } = req.params;
-  const rows = await queries.getGameById(platformId);
-  const game = rows[0];
 
-  res.render("addGameForm", {
+  res.render("gameForm", {
     title: "Add game",
-    platformId: platformId,
-    game: game,
+    formAction: `/platforms/${platformId}/games/new`,
+    game: {}, // so all fields are blank
+    platformId,
   });
 }
+
 export async function addNewGameToPlatformPost(req, res) {
   const errors = validationResult(req);
   const { platformId } = req.params;
 
   const { gameTitle, publisher, genre, releaseYear } = req.body;
-  console.log(gameTitle);
 
   if (!errors.isEmpty()) {
-    return res.status(400).render("addGameForm", {
+    return res.status(400).render("gameForm", {
       title: "Add Game",
-      releaseYear,
-      gameTitle,
-      genre,
-      publisher,
+      game: {
+        title: gameTitle,
+        publisher,
+        genre,
+        releaseYear,
+      },
       platformId,
       errors: errors.array(),
+      formAction: `/platforms/${platformId}/games/new`,
     });
   }
 
-  const form = req.body;
+  const form = {
+    title: gameTitle,
+    publisher,
+    genre,
+    releaseYear,
+  };
+  await queries.addGameToPlatform(form, platformId);
 
   const queryResult = await queries.addGameToPlatform(form, platformId);
   res.redirect(`/platforms/${platformId}/games`);
@@ -134,37 +138,46 @@ export async function deletePlatformPost(req, res) {
 export async function editGame(req, res) {
   const { gameId, platformId } = req.params;
   const rows = await queries.getGameById(gameId);
-  const game = rows[0];
+
+  if (!rows.length) return res.status(404).send("Game not found");
+
   res.render("gameForm", {
     title: "Edit game",
-    gameId: game.id,
-    game,
+    formAction: `/platforms/${platformId}/games/${gameId}/edit`,
+    game: rows[0],
     platformId,
   });
 }
 
 export async function editGamePost(req, res) {
+  console.log("Edit Game Post");
   const { platformId, gameId } = req.params;
   const errors = validationResult(req);
-
-  console.log(platformId);
+  console.log(req.body);
 
   if (!errors.isEmpty()) {
     return res.status(400).render("gameForm", {
       platformId,
       game: {
         id: gameId,
-        title: req.body.title,
+        title: req.body.gameTitle,
         publisher: req.body.publisher,
         genre: req.body.genre,
         release_year: req.body.releaseYear,
       },
       title: "Edit game",
       errors: errors.array(),
+      formAction: `/platforms/${platformId}/games/${gameId}/edit`,
     });
   }
 
-  await queries.editGame(gameId, req.body);
+  const form = {
+    title: req.body.gameTitle,
+    publisher: req.body.publisher,
+    genre: req.body.genre,
+    release_year: req.body.releaseYear,
+  };
+  await queries.editGame(gameId, form);
 
   // TODO
   // Redirect to just displaying the game on it's own.
