@@ -56,8 +56,71 @@ router.post(
   ],
   platformController.editPlatformPost
 );
+
+router.get("/:platformId/games/new", platformController.addNewGameToPlatform);
+router.post(
+  "/:platformId/games/new",
+  [
+    body("gameTitle")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Title must be 1-100 characters"),
+
+    body("publisher")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Publisher must be 1-100 characters"),
+
+    body("genre")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Publisher must be 1-100 characters"),
+
+    body("releaseYear")
+      .trim()
+      .escape()
+      .isInt({ min: 1970, max: new Date().getFullYear() + 1 })
+      .withMessage("Enter a valid four digit year."),
+  ],
+  platformController.addNewGameToPlatformPost
+);
+
+router.get("/:platformId/games/:gameId/edit", platformController.editGame);
+
+router.post(
+  "/:platformId/games/:gameId/edit",
+  [
+    body("title")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Title must be 1-100 characters"),
+
+    body("publisher")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Publisher must be 1-100 characters"),
+
+    body("genre")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Publisher must be 1-100 characters"),
+
+    body("releaseYear")
+      .trim()
+      .escape()
+      .isInt({ min: 1970, max: new Date().getFullYear() + 1 })
+      .withMessage("Enter a valid four digit year."),
+  ],
+  platformController.editGamePost
+);
+
+router.get("/:id/games", platformController.getPlatformById);
+
 router.post("/:id/delete", platformController.deletePlatformPost);
-
-router.get("/:id", platformController.getPlatformById);
-
 export default router;

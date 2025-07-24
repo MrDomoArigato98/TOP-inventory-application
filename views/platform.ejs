@@ -6,28 +6,25 @@
 
     <div class="list">
         <div class="card-add">
-            <a class="card-link" href="/games/new">
+            <a class="card-link" href="/platforms/<%= platformId %>/games/new">
                 <h2 class="card-link">Add new games</h2>
             </a>
         </div>
-        <div class="list">
-
-            <% games.forEach(game=> { %>
-                <div class="card">
-                    <p>
-                        <%= game.title %>
-                    </p>
-                    <p>Genre: <%= game.genre %>
-                    </p>
-                    <p>Release Year: <%= game.release_year %>
-                    </p>
-                    <p>Publisher: <%= game.publisher %>
-                    </p>
-                    <a class="card-link" href="/games/<%= game.id %>/edit">Edit</a>
-                </div>
-                <% }) %>
+        <% games.forEach(game=> { %>
+            <div class="card">
+                <p>
+                    <%= game.title %>
+                </p>
+                <p>Genre: <%= game.genre %>
+                </p>
+                <p>Release Year: <%= game.release_year %>
+                </p>
+                <p>Publisher: <%= game.publisher %>
+                </p>
+                <a class="card-link" href="/platforms/<%= platformId %>/games/<%= game.id %>/edit">Edit</a>
+            </div>
+            <% }) %>
 
 
 
-        </div>
-        <%- include ("./partials/footer") %>
+                <%- include ("./partials/footer") %>

@@ -1,32 +1,32 @@
 <%- include("./partials/header") %>
 
-        <form action="/games/<%= game.id %>/edit" method="POST">
+    <form action="/platforms/<%= platformId %>/games/<%= game.id %>/edit" method="POST">
 
-            <label>Game Title:</label>
-            <input value="<%= game.title %>" type="text" name="title" id="title" required>
+        <label>Game Title:</label>
+        <input value="<%= game.title %>" type="text" name="title" id="title" required>
 
-            <label>Publisher: </label>
-            <input value="<%= game.publisher %>" type="text" name="publisher" id="publisher" required>
-            <label>Genre: </label>
-            <input value="<%= game.genre %>" type="text" name="genre" id="genre" required>
+        <label>Publisher: </label>
+        <input value="<%= game.publisher %>" type="text" name="publisher" id="publisher" required>
+        <label>Genre: </label>
+        <input value="<%= game.genre %>" type="text" name="genre" id="genre" required>
 
-            <label>Release Year: </label>
-            <input value="<%= game.release_year %>" type="text" name="releaseYear" id="releaseYear" required>
+        <label>Release Year: </label>
+        <input value="<%= game.release_year %>" type="text" name="releaseYear" id="releaseYear" required>
 
-            <button type="submit">Submit</button>
-            <a class="card-link" href="/">Back to home</a>
-            
-            <% if (typeof errors !=='undefined' ) { %>
-                <ul class="errors">
-                    <% errors.forEach(err=> { %>
-                        <li>
-                            <%= err.msg %>
-                        </li>
-                        <% }) %>
-                </ul>
-                <% } %>
-        </form>
+        <button type="submit">Submit</button>
+        <a class="card-link" href="/">Back to home</a>
+
+        <% if (typeof errors !=='undefined' ) { %>
+            <ul class="errors">
+                <% errors.forEach(err=> { %>
+                    <li>
+                        <%= err.msg %>
+                    </li>
+                    <% }) %>
+            </ul>
+            <% } %>
+    </form>
 
 
 
-        <%- include("./partials/footer") %>
+    <%- include("./partials/footer") %>

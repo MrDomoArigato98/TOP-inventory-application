@@ -1,10 +1,10 @@
 <%- include("./partials/header") %>
 
-    <form action="/games/new/" method="POST">
+    <form action="/platforms/<%= platformId %>/games/new" method="POST">
 
         <label>Game Title:</label>
-        <input value="<%= typeof gameTitle !== 'undefined' ? gameTitle : '' %>" placeholder="Tetris" type="text" name="gameTitle"
-            id="gameTitle" required>
+        <input value="<%= typeof gameTitle !== 'undefined' ? gameTitle : '' %>" placeholder="Tetris" type="text"
+            name="gameTitle" id="gameTitle" required>
 
         <label>Publisher: </label>
         <input value="<%= typeof publisher !=='undefined' ? publisher: '' %>" placeholder="Ubisoft" type="publisher"

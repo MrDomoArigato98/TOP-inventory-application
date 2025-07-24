@@ -17,22 +17,9 @@ export async function addNewGameGetForm(req, res) {
   });
 }
 
-export async function addNewGamePost(req, res) {
-  const errors = validationResult(req);
-
-  const { gameTitle, publisher, genre, releaseYear } = req.body;
-  if (!errors.isEmpty()) {
-    return res.status(400).render("addGameForm", {
-      title: "Add Game",
-    });
-  }
-
-  res.redirect("/");
-}
+export async function addNewGamePost(req, res) {}
 
 export async function editGameGetForm(req, res) {
-  console.log("editGameGetForm");
-
   const { id } = req.params;
 
   const rows = await queries.getGameById(id);
@@ -46,19 +33,21 @@ export async function editGameGetForm(req, res) {
 
 export async function editGamePost(req, res) {
   console.log("editGamePost");
-  const { id } = req.params;
+  const { platformId } = req.params;
   const errors = validationResult(req);
 
   console.log(req.body);
+
+  const { title, publisher, genre, release_year } = req.body;
 
   if (!errors.isEmpty()) {
     return res.status(400).render("gameForm", {
       game: {
         id,
-        title: req.body.title,
-        publisher: req.body.publisher,
-        genre: req.body.genre,
-        release_year: req.body.releaseYear,
+        title,
+        release_year,
+        genre,
+        publisher,
       },
       title: "Edit game",
       errors: errors.array(),
