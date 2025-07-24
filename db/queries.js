@@ -39,7 +39,7 @@ export async function addPlatform(form) {
     VALUES ($1,$2,$3)
     RETURNING *;
     `,
-    [form.platform, form.manufacturer, form.releaseYear]
+    [form.platformName, form.manufacturer, form.releaseYear]
   );
 
   return rows;

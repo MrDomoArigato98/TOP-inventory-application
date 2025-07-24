@@ -36,17 +36,18 @@ export async function addNewPlatformGetForm(req, res) {
 export async function addNewPlatformPost(req, res) {
   console.log("addNewPlatformPost");
   const errors = validationResult(req);
+  console.log(req.body);
 
-  const { platform, manufacturer, releaseYear } = req.body;
   if (!errors.isEmpty()) {
-    return res.status(400).render("addPlatformForm", {
-      name: platform,
-      manufacturer,
-      release_year: releaseYear,
+    return res.status(400).render("platformForm", {
+      platform: {
+        platformName: req.body.platformName,
+        manufacturer: req.body.manufacturer,
+        release_year: req.body.releaseYear,
+      },
       title: "Edit Platform",
       errors: errors.array(),
       formAction: "/platforms/new/",
-      platform: {},
     });
   }
   const form = req.body;
@@ -91,7 +92,6 @@ export async function editPlatformPost(req, res) {
   const form = req.body;
 
   console.log(form);
-  
 
   await queries.editPlatform(platformId, form);
 
