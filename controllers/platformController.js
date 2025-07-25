@@ -43,7 +43,6 @@ export async function addNewPlatformPost(req, res) {
   const errors = validationResult(req).array();
 
   const { adminPassword } = req.body;
-  console.log(adminPassword);
 
   if (req.adminError) {
     errors.push(req.adminError);
@@ -54,7 +53,7 @@ export async function addNewPlatformPost(req, res) {
       platform: {
         platformName: req.body.platformName,
         manufacturer: req.body.manufacturer,
-        release_year: req.body.releaseYear,
+        release_year: req.body.release_year,
       },
       title: "Edit Platform",
       errors,
@@ -87,8 +86,9 @@ export async function editPlatformGetForm(req, res) {
 
 export async function editPlatformPost(req, res) {
   const errors = validationResult(req).array();
+  console.log(req.body);
+
   const { platformId } = req.params;
-  const { adminPassword } = req.body;
   if (req.adminError) {
     errors.push(req.adminError);
   }
@@ -99,7 +99,7 @@ export async function editPlatformPost(req, res) {
         platformId,
         platformName: req.body.platformName,
         manufacturer: req.body.manufacturer,
-        release_year: req.body.releaseYear,
+        release_year: req.body.release_year,
       },
       title: "Edit Platform",
       formAction: `/platforms/${platformId}/edit`,
@@ -107,7 +107,11 @@ export async function editPlatformPost(req, res) {
     });
   }
 
-  const form = req.body;
+  const form = {
+    platformName: req.body.platformName,
+    manufacturer: req.body.manufacturer,
+    release_year: req.body.release_year,
+  };
 
   await queries.editPlatform(platformId, form);
 
@@ -128,7 +132,7 @@ export async function addNewGameToPlatformPost(req, res) {
   const errors = validationResult(req).array();
   const { platformId } = req.params;
 
-  const { gameTitle, publisher, genre, releaseYear, adminPassword } = req.body;
+  const { gameTitle, publisher, genre, releaseYear } = req.body;
 
   if (req.adminError) {
     errors.push(req.adminError);
@@ -241,7 +245,6 @@ export async function deletePlatformPost(req, res) {
 }
 
 export async function deleteGameFromPlatformGet(req, res) {
-
   const { platformId, gameId } = req.params;
   res.render("confirmDeleteForm", {
     formAction: `/platforms/${platformId}/games/${gameId}/delete`,

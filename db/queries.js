@@ -39,7 +39,7 @@ export async function addPlatform(form) {
     VALUES ($1,$2,$3)
     RETURNING *;
     `,
-    [form.platformName, form.manufacturer, form.releaseYear]
+    [form.platformName, form.manufacturer, form.release_year]
   );
 
   return rows;
@@ -54,7 +54,7 @@ export async function editPlatform(id, form) {
     WHERE id = $4
     RETURNING *;
     `,
-    [form.platformName, form.manufacturer, form.releaseYear, id]
+    [form.platformName, form.manufacturer, form.release_year, id]
   );
 
   return res;

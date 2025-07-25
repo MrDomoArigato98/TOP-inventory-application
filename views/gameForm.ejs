@@ -3,7 +3,8 @@
   <form class="input-form " action="<%= formAction %>" method="POST">
     <label>Game Title:</label>
     <input value="<%= game?.title || '' %>" placeholder="Tetris" type="text" name="gameTitle" id="gameTitle" required />
-
+<%- console.log(game);
+ %>
     <label>Publisher:</label>
     <input value="<%= game?.publisher || '' %>" placeholder="Ubisoft" type="text" name="publisher" id="publisher"
       required />

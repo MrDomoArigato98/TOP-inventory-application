@@ -14,7 +14,7 @@ export const platformValidators = [
     .isLength({ min: 1, max: 100 })
     .withMessage("Manufacturer name must be 1-100 characters"),
 
-  body("releaseYear")
+  body("release_year")
     .trim()
     .toInt()
     .isInt({ min: 1970, max: new Date().getFullYear() + 1 })
