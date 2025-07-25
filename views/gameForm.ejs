@@ -15,8 +15,11 @@
     <input value="<%= game?.release_year || '' %>" placeholder="2025" type="text" name="releaseYear" id="releaseYear"
       required />
 
+    <label for="adminPassword">Admin Password:</label>
+    <input type="password" id="adminPassword" name="adminPassword" required>
+
     <button class="submit-button" type="submit">Submit</button>
-    <a class="card-link" href="/">Back to home</a>
+    <a class="card-link" href="/platforms/<%= platformId %>/games">Back to games</a>
 
     <% if (typeof errors !=="undefined" ) { %>
       <ul class="errors">
