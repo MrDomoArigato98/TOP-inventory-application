@@ -197,3 +197,8 @@ export async function editGamePost(req, res) {
   // Redirect to just displaying the game on it's own.
   res.redirect(`/platforms/${platformId}/games`);
 }
+
+export async function deletePlatform(req,res){
+  console.log("Test");
+  
+}

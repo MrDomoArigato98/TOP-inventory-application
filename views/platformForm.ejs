@@ -1,10 +1,11 @@
 <%- include("./partials/header") %>
 
 
-    <form action=<%=formAction %> method="POST">
+    <form class="input-form " action=<%=formAction %> method="POST">
 
         <label>Platform:</label>
-        <input value="<%= platform?.platformName || ''%>" placeholder="PS5" type="text" name="platformName" id="platformName" required>
+        <input value="<%= platform?.platformName || ''%>" placeholder="PS5" type="text" name="platformName"
+            id="platformName" required>
 
         <label>Manufacturer: </label>
         <input value="<%=platform?.manufacturer || ''%>" placeholder="Sony" type="text" name="manufacturer"
@@ -14,7 +15,7 @@
         <input value="<%=platform?.release_year || '' %>" placeholder="2025" type="text" name="releaseYear"
             id="releaseYear" required>
 
-        <button type="submit">Submit</button>
+        <button class="submit-button" type="submit">Submit</button>
         <a class="card-link" href="/">Back to home</a>
 
         <% if (typeof errors !=='undefined' ) { %>
