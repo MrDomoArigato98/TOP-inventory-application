@@ -31,7 +31,7 @@ router.post(
   gameValidators,
   platformController.editGamePost
 );
-router.get("/:platformId/delete", platformController.deletePlatform);
+
 router.post("/:platformId/delete", platformController.deletePlatformPost);
 
 router.get("/:platformId/games", platformController.getPlatformById);

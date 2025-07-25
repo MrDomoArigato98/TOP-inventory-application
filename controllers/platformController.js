@@ -140,13 +140,19 @@ export async function addNewGameToPlatformPost(req, res) {
     genre,
     releaseYear,
   };
-  await queries.addGameToPlatform(form, platformId);
 
   const queryResult = await queries.addGameToPlatform(form, platformId);
   res.redirect(`/platforms/${platformId}/games`);
 }
 export async function deletePlatformPost(req, res) {
-  console.log("deletePlatformPost");
+  const { platformId } = req.params;
+  try {
+    const result = await queries.deletePlatform(platformId);
+  } catch (error) {
+    console.error(error);
+  }
+
+  res.redirect("/");
 }
 
 export async function editGame(req, res) {
@@ -196,9 +202,4 @@ export async function editGamePost(req, res) {
   // TODO
   // Redirect to just displaying the game on it's own.
   res.redirect(`/platforms/${platformId}/games`);
-}
-
-export async function deletePlatform(req,res){
-  console.log("Test");
-  
 }

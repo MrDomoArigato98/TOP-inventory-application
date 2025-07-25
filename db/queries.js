@@ -92,3 +92,15 @@ export async function editGame(id, form) {
 
   return res.rows[0];
 }
+
+export async function deletePlatform(platformId) {
+  const res = await pool.query(
+    `
+    DELETE FROM platforms 
+      WHERE id = ($1)
+    `,
+    [platformId]
+  );
+
+  return res;
+}
