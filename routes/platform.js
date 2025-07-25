@@ -8,7 +8,7 @@ import {
   gameValidators_2,
 } from "../validators/platformValidators.js";
 
-router.get("/new", platformController.addNewPlatformGetForm);
+router.get("/new", platformController.addNewPlatformGet);
 router.post("/new", platformValidators, platformController.addNewPlatformPost);
 
 router.get("/:platformId/edit", platformController.editPlatformGetForm);
@@ -18,22 +18,29 @@ router.post(
   platformController.editPlatformPost
 );
 
-router.get("/:platformId/games/new", platformController.addNewGameToPlatform);
+router.get("/:platformId/games/new", platformController.addNewGameToPlatformGet);
 router.post(
   "/:platformId/games/new",
   gameValidators_2,
   platformController.addNewGameToPlatformPost
 );
 
-router.get("/:platformId/games/:gameId/edit", platformController.editGame);
+router.get("/:platformId/games/:gameId/edit", platformController.editGameGet);
 router.post(
   "/:platformId/games/:gameId/edit",
   gameValidators,
   platformController.editGamePost
 );
 
+router.get("/:platformId/delete", platformController.getDeletePlatformForm);
+
 router.post("/:platformId/delete", platformController.deletePlatformPost);
 
+
+router.get(
+  "/:platformId/games/:gameId/delete",
+  platformController.deleteGameFromPlatformGet
+);
 router.post(
   "/:platformId/games/:gameId/delete",
   platformController.deleteGameFromPlatformPost

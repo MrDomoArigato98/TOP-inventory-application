@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import { checkAdminPassword } from "../middleware/checkAdminPassword.js";
 
 export const platformValidators = [
   body("platformName")
@@ -18,6 +19,7 @@ export const platformValidators = [
     .toInt()
     .isInt({ min: 1970, max: new Date().getFullYear() + 1 })
     .withMessage("Enter a valid release year"),
+  checkAdminPassword,
 ];
 
 export const gameValidators = [
@@ -44,6 +46,7 @@ export const gameValidators = [
     .toInt()
     .isInt({ min: 1970, max: new Date().getFullYear() + 1 })
     .withMessage("Enter a valid release year"),
+  checkAdminPassword,
 ];
 export const gameValidators_2 = [
   body("gameTitle")
@@ -69,4 +72,5 @@ export const gameValidators_2 = [
     .toInt()
     .isInt({ min: 1970, max: new Date().getFullYear() + 1 })
     .withMessage("Enter a valid release year"),
+  checkAdminPassword,
 ];

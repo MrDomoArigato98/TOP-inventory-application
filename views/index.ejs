@@ -11,7 +11,7 @@
         <% platforms.forEach(platform=> { %>
             <div class="card">
 
-                <form action="/platforms/<%= platform.id %>/delete" method="POST" class="delete-form">
+                <form action="/platforms/<%= platform.id %>/delete" method="GET" class="delete-form">
                     <button type="submit" class="delete-button" title="Delete platform">X</button>
                 </form>
                 <h2>

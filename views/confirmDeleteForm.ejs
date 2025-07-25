@@ -1,0 +1,23 @@
+<%- include("./partials/header") %>
+
+<h2 class="highlight">Confirm Deletion</h2>
+
+<form action=<%= formAction %> method="POST">
+  <p>Are you sure you want to delete?</p>
+
+  <label for="adminPassword">Admin Password:</label>
+  <input type="password" name="adminPassword" id="adminPassword" required>
+
+  <button class="submit-button" type="submit">Yes, Delete</button>
+  <a href="/">Cancel</a>
+
+  <% if (errors && errors.length > 0) { %>
+    <ul class="errors">
+      <% errors.forEach(err => { %>
+        <li><%= err.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+</form>
+
+<%- include("./partials/footer") %>

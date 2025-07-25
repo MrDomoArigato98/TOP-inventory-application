@@ -3,7 +3,7 @@ import * as queries from "../db/queries.js";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-
+import { checkAdminPassword } from "../middleware/checkAdminPassword.js";
 // Recreate __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,7 +32,7 @@ export async function getPlatformById(req, res) {
   }
 }
 
-export async function addNewPlatformGetForm(req, res) {
+export async function addNewPlatformGet(req, res) {
   res.render("platformForm", {
     title: "Add Platform",
     formAction: "/platforms/new/",
@@ -40,9 +40,16 @@ export async function addNewPlatformGetForm(req, res) {
   });
 }
 export async function addNewPlatformPost(req, res) {
-  const errors = validationResult(req);
+  const errors = validationResult(req).array();
 
-  if (!errors.isEmpty()) {
+  const { adminPassword } = req.body;
+  console.log(adminPassword);
+
+  if (req.adminError) {
+    errors.push(req.adminError);
+  }
+
+  if (errors.length > 0) {
     return res.status(400).render("platformForm", {
       platform: {
         platformName: req.body.platformName,
@@ -50,7 +57,7 @@ export async function addNewPlatformPost(req, res) {
         release_year: req.body.releaseYear,
       },
       title: "Edit Platform",
-      errors: errors.array(),
+      errors,
       formAction: "/platforms/new/",
     });
   }
@@ -79,24 +86,14 @@ export async function editPlatformGetForm(req, res) {
 }
 
 export async function editPlatformPost(req, res) {
-  const errors = validationResult(req);
+  const errors = validationResult(req).array();
   const { platformId } = req.params;
   const { adminPassword } = req.body;
-
-  if (adminPassword !== process.env.ADMIN_PASSWORD) {
-    return res.status(403).render("platformForm", {
-      platform: {
-        platformId,
-        platformName: req.body.platformName,
-        manufacturer: req.body.manufacturer,
-        release_year: req.body.releaseYear,
-      },
-      title: "Edit Platform",
-      formAction: `/platforms/${platformId}/edit`,
-      errors: [{ msg: "Invalid admin password" }],
-    });
+  if (req.adminError) {
+    errors.push(req.adminError);
   }
-  if (!errors.isEmpty()) {
+
+  if (errors.length > 0) {
     return res.status(400).render("platformForm", {
       platform: {
         platformId,
@@ -106,7 +103,7 @@ export async function editPlatformPost(req, res) {
       },
       title: "Edit Platform",
       formAction: `/platforms/${platformId}/edit`,
-      errors: errors.array(),
+      errors,
     });
   }
 
@@ -116,7 +113,7 @@ export async function editPlatformPost(req, res) {
 
   res.redirect("/");
 }
-export async function addNewGameToPlatform(req, res) {
+export async function addNewGameToPlatformGet(req, res) {
   const { platformId } = req.params;
 
   res.render("gameForm", {
@@ -128,27 +125,15 @@ export async function addNewGameToPlatform(req, res) {
 }
 
 export async function addNewGameToPlatformPost(req, res) {
-  const errors = validationResult(req);
+  const errors = validationResult(req).array();
   const { platformId } = req.params;
 
   const { gameTitle, publisher, genre, releaseYear, adminPassword } = req.body;
 
-  if (adminPassword !== process.env.ADMIN_PASSWORD) {
-    return res.status(403).render("platformForm", {
-      title: "Add Game",
-      game: {
-        title: gameTitle,
-        publisher,
-        genre,
-        release_year: releaseYear,
-      },
-      platformId,
-      errors: errors.array(),
-      formAction: `/platforms/${platformId}/games/new`,
-      errors: [{ msg: "Invalid admin password" }],
-    });
+  if (req.adminError) {
+    errors.push(req.adminError);
   }
-  if (!errors.isEmpty()) {
+  if (errors.length > 0) {
     return res.status(400).render("gameForm", {
       title: "Add Game",
       game: {
@@ -158,7 +143,7 @@ export async function addNewGameToPlatformPost(req, res) {
         release_year: releaseYear,
       },
       platformId,
-      errors: errors.array(),
+      errors,
       formAction: `/platforms/${platformId}/games/new`,
     });
   }
@@ -173,18 +158,8 @@ export async function addNewGameToPlatformPost(req, res) {
   const queryResult = await queries.addGameToPlatform(form, platformId);
   res.redirect(`/platforms/${platformId}/games`);
 }
-export async function deletePlatformPost(req, res) {
-  const { platformId } = req.params;
-  try {
-    const result = await queries.deletePlatform(platformId);
-  } catch (error) {
-    console.error(error);
-  }
 
-  res.redirect("/");
-}
-
-export async function editGame(req, res) {
+export async function editGameGet(req, res) {
   const { gameId, platformId } = req.params;
   const rows = await queries.getGameById(gameId);
 
@@ -198,26 +173,13 @@ export async function editGame(req, res) {
 
 export async function editGamePost(req, res) {
   const { platformId, gameId } = req.params;
+  const errors = validationResult(req).array();
 
-  const { adminPassword } = req.body;
-  const errors = validationResult(req);
-
-  if (adminPassword !== process.env.ADMIN_PASSWORD) {
-    return res.status(403).render("gameForm", {
-      game: {
-        platformId,
-        gameId,
-        title: req.body.gameTitle,
-        publisher: req.body.publisher,
-        genre: req.body.genre,
-        release_year: req.body.releaseYear,
-      },
-      errors: [{ msg: "Invalid admin password" }],
-      formAction: `/platforms/${platformId}/games/${gameId}/edit`,
-      title: "Edit game",
-    });
+  if (req.adminError) {
+    errors.push(req.adminError);
   }
-  if (!errors.isEmpty()) {
+
+  if (errors.length > 0) {
     return res.status(400).render("gameForm", {
       platformId,
       game: {
@@ -227,7 +189,7 @@ export async function editGamePost(req, res) {
         release_year: req.body.releaseYear,
       },
       title: "Edit game",
-      errors: errors.array(),
+      errors,
       formAction: `/platforms/${platformId}/games/${gameId}/edit`,
     });
   }
@@ -245,10 +207,65 @@ export async function editGamePost(req, res) {
   res.redirect(`/platforms/${platformId}/games`);
 }
 
+export async function getDeletePlatformForm(req, res) {
+  const { platformId } = req.params;
+
+  res.render("confirmDeleteForm", {
+    formAction: `/platforms/${platformId}/delete`,
+    title: "Confirm Delete",
+    platformId,
+    errors: [],
+  });
+}
+
+export async function deletePlatformPost(req, res) {
+  const { platformId } = req.params;
+  const { adminPassword } = req.body;
+
+  if (adminPassword !== process.env.ADMIN_PASSWORD) {
+    return res.status(403).render("confirmDeleteForm", {
+      formAction: `/platforms/${platformId}/delete`,
+      title: "Confirm Delete",
+      platformId,
+      errors: [{ msg: "Invalid admin password" }],
+    });
+  }
+
+  try {
+    await queries.deletePlatform(platformId);
+  } catch (error) {
+    console.error(error);
+  }
+
+  res.redirect("/");
+}
+
+export async function deleteGameFromPlatformGet(req, res) {
+
+  const { platformId, gameId } = req.params;
+  res.render("confirmDeleteForm", {
+    formAction: `/platforms/${platformId}/games/${gameId}/delete`,
+    title: "Confirm Delete",
+    platformId,
+    errors: [],
+  });
+}
 export async function deleteGameFromPlatformPost(req, res) {
   const { gameId, platformId } = req.params;
+  const { adminPassword } = req.body;
 
-  const result = await queries.deleteGame(gameId);
-
+  if (adminPassword !== process.env.ADMIN_PASSWORD) {
+    return res.status(403).render("confirmDeleteForm", {
+      formAction: `/platforms/${platformId}/games/${gameId}/delete`,
+      title: "Confirm Delete",
+      platformId,
+      errors: [{ msg: "Invalid admin password" }],
+    });
+  }
+  try {
+    await queries.deleteGame(gameId);
+  } catch (error) {
+    console.error(error);
+  }
   res.redirect(`/platforms/${platformId}/games`);
 }

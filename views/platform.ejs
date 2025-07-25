@@ -15,7 +15,7 @@
                 <h2>
                     <%= game.title %>
                 </h2>
-                <form action="/platforms/<%= platformId %>/games/<%= game.id %>/delete" method="POST"
+                <form action="/platforms/<%= platformId %>/games/<%= game.id %>/delete" method="GET"
                     class="delete-form">
                     <button type="submit" class="delete-button" title="Delete platform">X</button>
                 </form>
