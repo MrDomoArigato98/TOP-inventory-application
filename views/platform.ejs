@@ -15,6 +15,10 @@
                 <h2>
                     <%= game.title %>
                 </h2>
+                <form action="/platforms/<%= platformId %>/games/<%= game.id %>/delete" method="POST"
+                    class="delete-form">
+                    <button type="submit" class="delete-button" title="Delete platform">X</button>
+                </form>
                 <p>Genre: <%= game.genre %>
                 </p>
                 <p>Release Year: <%= game.release_year %>

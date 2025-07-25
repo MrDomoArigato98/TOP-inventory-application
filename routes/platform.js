@@ -34,6 +34,11 @@ router.post(
 
 router.post("/:platformId/delete", platformController.deletePlatformPost);
 
+router.post(
+  "/:platformId/games/:gameId/delete",
+  platformController.deleteGameFromPlatformPost
+);
+
 router.get("/:platformId/games", platformController.getPlatformById);
 
 export default router;

@@ -62,5 +62,16 @@ export async function editGamePost(req, res) {
 }
 
 export async function deleteGamePost(req, res) {
-  console.log("deleteGamePost");
+    console.log(req.body);
+    console.log(req.params);
+    
+    const {gameId} = req.params;
+
+
+    const result = await queries.deleteGame(gameId)
+
+    console.log("TODO: Fix redirect to games");
+    
+
+    
 }

@@ -203,3 +203,11 @@ export async function editGamePost(req, res) {
   // Redirect to just displaying the game on it's own.
   res.redirect(`/platforms/${platformId}/games`);
 }
+
+export async function deleteGameFromPlatformPost(req, res) {
+  const { gameId, platformId } = req.params;
+
+  const result = await queries.deleteGame(gameId);
+
+  res.redirect(`/platforms/${platformId}/games`);
+}

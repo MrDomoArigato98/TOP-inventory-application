@@ -47,6 +47,6 @@ router.post(
   gameController.editGamePost
 );
 
-router.post("/:id/delete", gameController.deleteGamePost);
+router.post("/:gameId/delete", gameController.deleteGamePost);
 
 export default router;

@@ -104,3 +104,14 @@ export async function deletePlatform(platformId) {
 
   return res;
 }
+
+export async function deleteGame(gameId) {
+  const res = await pool.query(
+    `
+    DELETE FROM games
+      WHERE id = ($1)`,
+    [gameId]
+  );
+
+  return res;
+}
