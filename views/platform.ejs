@@ -1,6 +1,6 @@
 <%- include ("./partials/header") %>
 
-    <h2>
+    <h2 class="highlight">
         <%= platform.name %> Games
     </h2>
 
@@ -12,9 +12,9 @@
         </div>
         <% games.forEach(game=> { %>
             <div class="card">
-                <p>
+                <h2>
                     <%= game.title %>
-                </p>
+                </h2>
                 <p>Genre: <%= game.genre %>
                 </p>
                 <p>Release Year: <%= game.release_year %>

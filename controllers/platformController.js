@@ -65,7 +65,12 @@ export async function editPlatformGetForm(req, res) {
 
   res.render("platformForm", {
     title: "Edit Platform",
-    platform: platform,
+    platform: {
+      id: platform.id,
+      platformName: platform.name,
+      manufacturer: platform.manufacturer,
+      release_year: platform.release_year,
+    },
     formAction: `/platforms/${platform.id}/edit`,
   });
 }

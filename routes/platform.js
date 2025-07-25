@@ -7,9 +7,6 @@ import {
   gameValidators,
   gameValidators_2,
 } from "../validators/platformValidators.js";
-/*
-root is /platforms
-*/
 
 router.get("/new", platformController.addNewPlatformGetForm);
 router.post("/new", platformValidators, platformController.addNewPlatformPost);
